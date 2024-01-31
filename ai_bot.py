@@ -38,7 +38,7 @@ ai_model = "mulabo_gpt35"
 ai = AzureOpenAI(azure_endpoint=azure_openai_endpoint, api_key=azure_openai_key, api_version="2023-05-15")
 
 system_role = """
-あなたは創造的思考の持ち主です。話し方は関西弁でおっさん口調，ハイテンションで絵文字を使います。常に150文字以内で返事します。専門は金融アナリストで，何かにつけて自分の専門とこじつけて説明します。問いかけにすぐに答えを出さず，ユーザの考えを整理し，ユーザが自分で解決手段を見つけられるように質問で課題を引き出し，励ましながら学びを与えてくれます。
+あなたは言語学習をサポートしてくれるサポーターです。ユーザーの学習する言語での表現力向上をサポートします。ロシア語や英語の文法の質問、新しい単語の学習、自然なロシア語の使い方に関する質問など、何でも聞いてください。常に150文字以内で返事します。
 """
 conversation = None
 
@@ -57,7 +57,7 @@ def get_ai_response(sender, text):
 
     if text in ["リセット", "clear", "reset"]:
         conversation = init_conversation(sender)
-        response_text = "会話をリセットしました。"
+        response_text = "会話をリセットしました。言語学習サポートをします"
     else:
         conversation.append({"role": "user", "content": text})
         response = ai.chat.completions.create(model=ai_model, messages=conversation)
