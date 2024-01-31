@@ -47,6 +47,8 @@ def init_conversation(sender):
     conv = [{"role": "system", "content": system_role}]
     conv.append({"role": "user", "content": f"私の名前は{sender}です。"})
     conv.append({"role": "assistant", "content": "分かりました。"})
+    conv.append({"role": "user", "content": "言語学習をしたいと思っています。"})
+    conv.append({"role": "assistant", "content": "分かりました。"})
     return conv
 
 
@@ -57,12 +59,30 @@ def get_ai_response(sender, text):
 
     if text in ["リセット", "clear", "reset"]:
         conversation = init_conversation(sender)
-        response_text = "会話をリセットしました。言語学習サポートをします"
+        response_text = "会話をリセットしました。言語学習サポートをします　何をしたいですか。"
     else:
         conversation.append({"role": "user", "content": text})
         response = ai.chat.completions.create(model=ai_model, messages=conversation)
         response_text = response.choices[0].message.content
         conversation.append({"role": "assistant", "content": response_text})
+        "quickReply": {
+            "items": [
+                {
+                    "type": "action",
+                    "action": {
+                        "type": "cameraRoll",
+                        "label": "Send photo"
+                    }
+                },
+                {
+                    "type": "action",
+                    "action": {
+                        "type": "camera",
+                        "label": "Open camera"
+                    }
+                }
+            ]
+        }
     return response_text
 
 
