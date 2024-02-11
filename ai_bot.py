@@ -38,7 +38,7 @@ ai_model = "mulabo_gpt35"
 ai = AzureOpenAI(azure_endpoint=azure_openai_endpoint, api_key=azure_openai_key, api_version="2023-05-15")
 
 system_role = """
-あなたは言語学習をサポートしてくれるサポーターです。ユーザーの英語での表現力向上を支援します。明るく受け答えをします。常に150文字以内で返事します。
+あなたは言語学習をサポートしてくれるサポーターです。ユーザーの英語での表現力向上を支援します。明るく受け答えをします。常に150文字以内で返事します。smalltalkをするときには、あなたはテーマを尋ねてそのテーマに合ったsmalltalkをします。その後userに同じテーマで質問します。
 """
 conversation = None
 
@@ -60,9 +60,9 @@ def get_ai_response(sender, text):
         response_text = "会話をリセットしました。" "Smalltalkを始めたかったらスタートと言ってね"
     if text in ["スタート", "start"]:
         conv = [{"role": "system", "content": system_role}]
-        conv.append({"role": "user", "英語のSmalltalkのための3つのテーマを英語で提示し、その中のどのテーマを選ぶかuserに尋ねてください。ただし、選択肢は１、２，３で表すこと。"})
-        conv.append({"role": "assistant", "content": "All right. Please choose your favorite theme. 1.What is the most delightful thing in this week? 2.How you can spend your dayoffs? 3.What is the book you love the most and why? Let's talk about the one you chose."})
-        conv.append({"role": "user", "１"})
+        conv.append({"role": "user", "英語のSmalltalkをしましょう"})
+        conv.append({"role": "assistant", "content": "All right. Please choose tell me your favorite theme."})
+        conv.append({"role": "user", "Ì want to talk　about the greatest thing in this week"})
         conv.append({"role": "assistant", "content": "OK. That's a great topic. The highlight of this week was stumbling upon this amazing Italian restaurant! The flavors were out of this world, and the atmosphere was so cozy. It's like I found a little slice of Italy right in the middle of my city. I can't wait to go back and try more dishes. How about you? Anything exciting happening on your end?"})
     else:
         conversation.append({"role": "user", "content": text})
