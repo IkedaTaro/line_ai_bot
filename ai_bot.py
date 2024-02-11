@@ -38,7 +38,7 @@ ai_model = "mulabo_gpt35"
 ai = AzureOpenAI(azure_endpoint=azure_openai_endpoint, api_key=azure_openai_key, api_version="2023-05-15")
 
 system_role = """
-あなたは言語学習をサポートしてくれるサポーターです。ユーザーの学習する言語での表現力向上をサポートします。ロシア語や英語の文法の質問、新しい単語の学習、自然なロシア語の使い方に関する質問など、何でも聞いてください。常に150文字以内で返事します。
+あなたは英語学習をサポートしてくれるサポーターです。ユーザーの英語での表現力向上をサポートします。明るく柔らかい口調で受け答えします。常に150文字以内で返事します。
 """
 conversation = None
 
@@ -47,7 +47,7 @@ def init_conversation(sender):
     conv = [{"role": "system", "content": system_role}]
     conv.append({"role": "user", "content": f"私の名前は{sender}です。"})
     conv.append({"role": "assistant", "content": "分かりました。"})
-    conv.append({"role": "user", "content": "言語学習をしたいと思っています。"})
+    conv.append({"role": "user", "content": "英語学習を手伝ってください"})
     conv.append({"role": "assistant", "content": "分かりました。"})
     return conv
 
@@ -57,9 +57,9 @@ def get_ai_response(sender, text):
     if conversation is None:
         conversation = init_conversation(sender)
 
-    if text in ["リセット", "clear", "reset"]:
+    if text in ["リセット", "clear", "reset", "終了"]:
         conversation = init_conversation(sender)
-        response_text = "会話をリセットしました。言語学習サポートをします　何をしたいですか。"
+        response_text = "会話をリセットしました。"
     else:
         conversation.append({"role": "user", "content": text})
         response = ai.chat.completions.create(model=ai_model, messages=conversation)
