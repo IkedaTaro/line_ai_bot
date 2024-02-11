@@ -65,25 +65,7 @@ def get_ai_response(sender, text):
         response = ai.chat.completions.create(model=ai_model, messages=conversation)
         response_text = response.choices[0].message.content
         conversation.append({"role": "assistant", "content": response_text})
-        "quickReply": {
-            "items": [
-                {
-                    "type": "action",
-                    "action": {
-                        "type": "cameraRoll",
-                        "label": "Send photo"
-                    }
-                },
-                {
-                    "type": "action",
-                    "action": {
-                        "type": "camera",
-                        "label": "Open camera"
-                    }
-                }
-            ]
-        }
-    return response_text
+
 
 
 @app.route("/callback", methods=["POST"])
