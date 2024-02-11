@@ -62,7 +62,7 @@ def get_ai_response(sender, text):
         conv = [{"role": "system", "content": system_role}]
         conv.append({"role": "user", "英語のSmalltalkのための3つのテーマを英語で提示し、その中のどのテーマを選ぶかuserに尋ねてください。ただし、選択肢は１、２，３で表すこと。"})
         conv.append({"role": "assistant", "content": "All right. Please choose your favorite theme. 1.What is the most delightful thing in this week? 2.How you can spend your dayoffs? 3.What is the book you love the most and why? Let's talk about the one you chose."})
-        conv.append({"role": "user", "content": "1"})
+        conv.append({1: "user"})
         conv.append({"role": "assistant", "content": "OK. That's a great topic. The highlight of this week was stumbling upon this amazing Italian restaurant! The flavors were out of this world, and the atmosphere was so cozy. It's like I found a little slice of Italy right in the middle of my city. I can't wait to go back and try more dishes. How about you? Anything exciting happening on your end?"})
     else:
         conversation.append({"role": "user", "content": text})
