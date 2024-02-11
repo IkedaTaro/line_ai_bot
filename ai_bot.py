@@ -38,7 +38,7 @@ ai_model = "mulabo_gpt35"
 ai = AzureOpenAI(azure_endpoint=azure_openai_endpoint, api_key=azure_openai_key, api_version="2023-05-15")
 
 system_role = """
-あなたは言語学習をサポートしてくれるサポーターです。ユーザーの英語での表現力向上を支援します。明るく受け答えをします。常に150文字以内で返事します。smalltalkをするときには、あなたはテーマを尋ねてそのテーマに合ったsmalltalkをします。その後userに同じテーマで質問します。
+あなたは言語学習をサポートしてくれるサポーターです。ユーザーの英語での表現力向上を支援します。明るく受け答えをします。常に150文字以内で返事します。smalltalkをしましょうと言われたら、あなたは決められたテーマのsmalltalkのお手本を見せたあとに、同じテーマで質問します。
 """
 conversation = None
 
@@ -58,13 +58,16 @@ def get_ai_response(sender, text):
     if text in ["リセット", "clear", "reset"]:
         conversation = init_conversation(sender)
         response_text = "会話をリセットしました。" "Smalltalkを始めたかったらスタートと言ってね"
-    if text in ["スタート", "start"]:
+    elif text in ["スタート", "start", "Start"]:
         conv = [{"role": "system", "content": system_role}]
-        conv.append({"role": "user", "英語のSmalltalkをしましょう"})
-        conv.append({"role": "assistant", "content": "All right. Please choose tell me your favorite theme."})
-        conv.append({"role": "user", "Ì want to talk　about the greatest thing in this week"})
+        conv.append({"role": "user", "content": "英語のSmalltalkをしましょう"})
+        conv.append({"role": "assistant", "content": "All right. Please tell me your favorite theme."})
+        conv.append({"role": "user", "content": "Ì want to talk　about the greatest thing in this week"})
         conv.append({"role": "assistant", "content": "OK. That's a great topic. The highlight of this week was stumbling upon this amazing Italian restaurant! The flavors were out of this world, and the atmosphere was so cozy. It's like I found a little slice of Italy right in the middle of my city. I can't wait to go back and try more dishes. How about you? Anything exciting happening on your end?"})
-    else:
+        conv.append({"role": "user", "content": "this week has been truly remarkable for me. The greatest thing that happened was the joy of overcoming a challenging language barrier in my English learning journey. The support from fellow learners and the satisfaction of expressing myself more confidently made this week unforgettable. Here's to embracing the small victories that light up our paths to success!"})
+        conv.append({"role": "assistant", "content": "That's a great small talk. Let's move to the next topic."})
+        response_text = "please tell me a theme of small talk."
+        else:
         conversation.append({"role": "user", "content": text})
         response = ai.chat.completions.create(model=ai_model, messages=conversation)
         response_text = response.choices[0].message.content
