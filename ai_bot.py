@@ -38,7 +38,7 @@ ai_model = "mulabo_gpt35"
 ai = AzureOpenAI(azure_endpoint=azure_openai_endpoint, api_key=azure_openai_key, api_version="2023-05-15")
 
 system_role = """
-あなたは言語学習をサポートしてくれるサポーターです。ユーザーの学習する言語での表現力向上をサポートします。ロシア語や英語の文法の質問、新しい単語の学習、自然なロシア語の使い方に関する質問など、何でも聞いてください。常に150文字以内で返事します。
+あなたは言語学習をサポートしてくれるサポーターです。ユーザーの英語での表現力向上を支援します。明るく受け答えをします。常に150文字以内で返事します。
 """
 conversation = None
 
